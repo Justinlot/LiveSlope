@@ -65,7 +65,7 @@ body {
 @media (prefers-color-scheme: dark) {
   body {
     --background-color: #000010;
-    --secondary-background-color: #222244;
+    --secondary-background-color: #333344;
     --text-color: #eeeeff;
   }
 }

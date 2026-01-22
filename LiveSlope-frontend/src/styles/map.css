@@ -1,4 +1,23 @@
 .map-container {
-    height: 83%;
+    height: 90%;
     width: 100%;
+}
+
+@media (max-width: 600px) {
+    .map-container{
+        height: 80%;
+    }
+    
+}
+
+@media (max-height: 500px) {
+    .map-container{
+        height: 82%;
+    }
+}
+
+@media (max-height: 500px) and (max-width: 600px) {
+    .map-container{
+        height: 64%;
+    }
 }

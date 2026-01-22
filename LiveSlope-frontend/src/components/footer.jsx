@@ -4,16 +4,13 @@ import logoutIcon from '../img/logout.svg'
 import profileIcon from '../img/profile.svg'
 import '../styles/headerAndFooter.css'
 
-function Header() {
-  //placeholders
-  const username = "Benutzer"
-  const loggedIn = true
-
+function Footer() {
+    //placeholders
+    const loggedIn = true
   return (
-    <div className='header'>
-        <h2>Willkommen{loggedIn ? `, ${username}` : ''}!</h2>
-        <div className="icons">{loggedIn ?
-          <>
+    <div className='footer'>
+        {loggedIn ?
+            <>
             <img
                 src={favoriteIcon}
                 alt="Favorite Icon"
@@ -29,14 +26,13 @@ function Header() {
                 alt="Logout Icon"
                 className="icon"
             />
-          </>
-          :
-          <>
-          </>
-          }
-        </div>
+            </>
+            :
+            <>
+            </>
+        }
     </div>
   )
 }
 
-export default Header
+export default Footer
