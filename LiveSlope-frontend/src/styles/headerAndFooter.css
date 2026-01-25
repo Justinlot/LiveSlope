@@ -26,6 +26,24 @@
     gap: 30px;
 }
 
+.button {
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: scale 0.1s;
+}
+
+.button:hover {
+    scale: 1.03;
+}
+
+.button:active {
+    scale: 0.97;
+}
+
 @media (max-width: 600px) {
     .icons{
         display: none;

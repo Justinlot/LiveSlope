@@ -7,7 +7,7 @@ import '../styles/headerAndFooter.css'
 function Header() {
   //placeholders
   const username = "Benutzer"
-  const loggedIn = true
+  const loggedIn = false
 
   return (
     <div className='header'>
@@ -32,6 +32,7 @@ function Header() {
           </>
           :
           <>
+            <a href='/login' className='button'>Anmelden</a>
           </>
           }
         </div>

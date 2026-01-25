@@ -6,7 +6,7 @@ import '../styles/headerAndFooter.css'
 
 function Footer() {
     //placeholders
-    const loggedIn = true
+    const loggedIn = false
   return (
     <div className='footer'>
         {loggedIn ?
@@ -29,6 +29,7 @@ function Footer() {
             </>
             :
             <>
+                <a href='/login' className='button'>Anmelden</a>
             </>
         }
     </div>
