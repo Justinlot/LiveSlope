@@ -1,0 +1,31 @@
+.more-sites {
+  display: flex;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  background-color: var(--background-color);
+  z-index: 1000;
+  gap: 10px;
+  border-radius: 6px;
+}
+
+.more-sites a {
+  font-weight: 500;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.separator {
+  color: lightgray;
+}
+
+
+@media (max-width: 600px){
+    .more-sites {
+        display: none;
+    }
+}
