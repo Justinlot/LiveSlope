@@ -11,7 +11,7 @@ function Footer() {
 	 */
 
 	//placeholders
-	const loggedIn = true
+	const loggedIn = false
 	return (
 		<div className='footer'>
 			{loggedIn ?

@@ -12,9 +12,9 @@ function Header() {
 
   //placeholders
   const username = "Benutzer"
-  const loggedIn = true
+  const loggedIn = false
 
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!menuOpen) return;
