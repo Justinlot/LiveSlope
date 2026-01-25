@@ -6,7 +6,7 @@ import '../styles/headerAndFooter.css'
 
 function Footer() {
     //placeholders
-    const loggedIn = false
+    const loggedIn = true
   return (
     <div className='footer'>
         {loggedIn ?
