@@ -2,6 +2,10 @@ import React from 'react'
 import '../styles/more-sites.css'
 
 function MoreSites() {
+  /**
+   * Component displaying links to additional site information (only shown on larger screens)
+   */
+  
   return (
     <div className='more-sites'>
         <a href='/about' className='site-link'>Über die Seite</a>

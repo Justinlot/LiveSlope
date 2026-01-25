@@ -5,6 +5,11 @@ import profileIcon from '../img/profile.svg'
 import '../styles/headerAndFooter.css'
 
 function Header() {
+  /**
+   * Component displaying the header with welcome message and icons
+   */
+
+
   //placeholders
   const username = "Benutzer"
   const loggedIn = true

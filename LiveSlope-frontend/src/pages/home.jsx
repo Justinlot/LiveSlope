@@ -6,6 +6,9 @@ import Footer from '../components/footer'
 import MoreSites from '../components/more-sites'
 
 function HomePage() {
+  /**
+   * main page of the application
+   */
   return (
     <div className='home'>
         <Header />
