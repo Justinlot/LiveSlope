@@ -25,6 +25,11 @@ function Register() {
                 <button type='submit'>Registrieren</button>
             </form>
             <p>Hast du schon einen Account? <a href='/login'>Anmelden</a></p>
+            <div className='sites-links'>
+              <a href='/about'>Über Uns</a>
+              <a href='/imprint'>Impressum</a>
+              <a href='/privacy'>Datenschutz</a>
+            </div>
         </div>
     </div>
   )

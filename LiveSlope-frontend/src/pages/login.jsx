@@ -21,6 +21,11 @@ function Login() {
                 <button type='submit'>Anmelden</button>
             </form>
             <p>Noch keinen Account? <a href='/register'>Registrieren</a></p>
+            <div className='sites-links'>
+              <a href='/about'>Über Uns</a>
+              <a href='/imprint'>Impressum</a>
+              <a href='/privacy'>Datenschutz</a>
+            </div>
         </div>
     </div>
   )
