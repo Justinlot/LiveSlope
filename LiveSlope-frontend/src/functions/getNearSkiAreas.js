@@ -13,7 +13,5 @@ export default function getNearSkiAreas(bounds) {
         }
     });
 
-    console.log(nearSkiAreas);
-
     return { type: "FeatureCollection", features: nearSkiAreas };
 }

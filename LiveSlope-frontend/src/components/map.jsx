@@ -28,7 +28,7 @@ function MapView() {
 			const { name, difficulty } = feature.properties;
 			const [lng, lat] = feature.geometry.coordinates;
 			L.marker([lat, lng]).addTo(map.current)
-				.bindPopup(`<b>${name}</b><br>Schwierigkeit: ${difficulty}`);
+				.bindPopup(`<b>${name}</b><br>Schwierigkeit: ${difficulty}<br><a href="https://www.google.com/maps/search/?api=1&query=Skigebiet+${name.split(' ').join('+')}" target="_blank">In Maps öffnen</a>`);
 		});
 	}, []);
 
@@ -46,7 +46,9 @@ function MapView() {
 	}, [handleMapMove]);
 
 	return (
-		<div className='map-container' ref={mapRef}></div>
+		<>
+			<div className='map-container' ref={mapRef}></div>
+		</>
 	)
 }
 
