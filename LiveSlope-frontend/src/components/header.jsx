@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import favoriteIcon from '../img/favorite.svg'
 import logoutIcon from '../img/logout.svg'
 import profileIcon from '../img/profile.svg'
 import '../styles/headerAndFooter.css'
+import AuthContext from '../assets/auth-context'
 
 function Header() {
   /**
@@ -10,9 +11,7 @@ function Header() {
    */
 
 
-  //placeholders
-  const username = "Benutzer"
-  const loggedIn = false
+  const { loggedIn, username } = useContext(AuthContext);
 
   const [menuOpen, setMenuOpen] = useState(false);
 

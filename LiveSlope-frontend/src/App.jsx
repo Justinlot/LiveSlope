@@ -4,17 +4,20 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/home'
 import Login from './pages/login'
 import Register from './pages/register'
+import AuthProvider from './components/auth-provider'
 
 function App() {
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
