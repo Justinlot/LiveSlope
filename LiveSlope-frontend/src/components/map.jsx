@@ -72,8 +72,10 @@ function MapView() {
 									const [lng, lat] = feature.geometry.coordinates;
 									map.current.setView([lat, lng], 14);
 								}}>
-									<b>{feature.properties.name}</b>
-									<p>Schwierigkeit: {feature.properties.difficulty}</p>
+									<div className='ski-area-text'>
+										<b>{feature.properties.name}</b>
+										<p>Schwierigkeit: {feature.properties.difficulty}</p>
+									</div>
 									<a href={`https://www.google.com/maps/search/?api=1&query=Skigebiet+${feature.properties.name.split(' ').join('+')}`} target="_blank" rel="noopener noreferrer">
 										In Maps öffnen
 									</a>

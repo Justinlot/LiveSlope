@@ -1,5 +1,5 @@
 .map-container {
-    height: 90%;
+    flex: 1;
     width: 100%;
 }
 
@@ -70,14 +70,17 @@
     flex-direction: column;
     width: 100%;
     cursor: pointer;
+}
+
+.ski-area-text{
     transform: opacity 0.1s;
 }
 
-.map-results ul li:hover{
+.ski-area-text:hover{
     opacity: 0.6;
 }
 
-.map-results ul li:active{
+.ski-area-text:active{
     opacity: 0.4;
 }
 
@@ -100,12 +103,44 @@
     .map-container{
         height: 80%;
     }
+    .side-panel-open{
+        width: 100%;
+        right: 0;
+        bottom: 100px;
+        border-radius: 0;
+    }
+    .map-results{
+        box-sizing: border-box;
+        width: 100%;
+        right: 0;
+        bottom: 100px;
+        border-radius: 0;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        box-shadow: none;
+        max-height: 350px;
+    }
     
 }
 
 @media (max-height: 500px) {
     .map-container{
         height: 82%;
+    }
+    .side-panel-open{
+        bottom: 20px;
+    }
+    .map-results{
+        box-sizing: border-box;
+        right: 0;
+        bottom: 100px;
+        border-radius: 0;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        box-shadow: none;
+        top: 100px;
+        bottom: 0;
+        border-radius: 0;
     }
 }
 
