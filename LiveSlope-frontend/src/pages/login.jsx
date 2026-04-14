@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import '../styles/login.css'
+import AuthContext from '../assets/auth-context';
 
 function Login() {
 
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const { login } = useContext(AuthContext);
 
   return (
     <div className='container'>
         <img src='/background.jpg' alt='background' className='background-image'/>
         <div className='login-form'>
             <h2>Anmelden</h2>
-            <form onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}>
+            <form onSubmit={handleSubmit((data) => login(data.username, data.password))}>
                 <label htmlFor='username'>Benutzername:</label>
                 <input type='text' id='username' name='username' {...register('username', { required: "Benutzername ist erforderlich" })} />
                 <span className='error-text'>{errors.username && errors.username.message}</span>

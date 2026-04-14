@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../styles/login.css'
 import { useForm } from 'react-hook-form'
 import { registerScheme } from '../zod-schemes/register-scheme'
 import { zodResolver } from '@hookform/resolvers/zod'
+import AuthContext from '../assets/auth-context'
 
 function Register() {
 
   const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(registerScheme)})
+
+  const { register: registerUser } = useContext(AuthContext);
+
+  
   return (
     <div className='container'>
         <img src='/background.jpg' alt='background' className='background-image'/>
         <div className='login-form'>
             <h2>Registrieren</h2>
-            <form onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}>
+            <form onSubmit={handleSubmit((data) => registerUser(data.username, data.password))}>
                 <label htmlFor='username'>Benutzername:</label>
                 <input type='text' id='username' name='username' {...register('username')} />
                 <span className='error-text'>{errors.username && errors.username.message}</span>

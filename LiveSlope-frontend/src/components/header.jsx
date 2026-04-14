@@ -11,7 +11,7 @@ function Header() {
    */
 
 
-  const { loggedIn, username } = useContext(AuthContext);
+  const { loggedIn, username, logout } = useContext(AuthContext);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -50,6 +50,7 @@ function Header() {
                 src={logoutIcon}
                 alt="Logout Icon"
                 className="icon"
+                onClick={logout}
             />
           </>
           :
