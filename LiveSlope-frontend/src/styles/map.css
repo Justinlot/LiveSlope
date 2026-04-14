@@ -1,11 +1,124 @@
 .map-container {
-    height: 90%;
+    flex: 1;
     width: 100%;
+}
+
+.side-panel-open{
+    position: fixed;
+    bottom: 50px;
+    right: 30px;
+    cursor: pointer;
+    background: var(--button-background-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: scale 0.1s;
+    z-index: 1000;
+}
+
+.side-panel-close{
+    bottom: 50px;
+    right: 30px;
+    cursor: pointer;
+    background: var(--button-background-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: scale 0.1s;
+    z-index: 1000;
+    width: 100%;
+}
+
+.side-panel-close:hover,
+.side-panel-open:hover{
+    scale: 1.01;
+}
+
+.side-panel-close:active,
+.side-panel-open:active{
+    scale: 0.99;
+}
+
+.map-results{
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    background: var(--background-color);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-height: 500px;
+    width: 300px;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    z-index: 1000;
+}
+
+.map-results ul{
+    list-style: none;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.map-results ul li{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    cursor: pointer;
+}
+
+.ski-area-text{
+    transform: opacity 0.1s;
+}
+
+.ski-area-text:hover{
+    opacity: 0.6;
+}
+
+.ski-area-text:active{
+    opacity: 0.4;
+}
+
+.map-results ul li p{
+    margin: 0;
+}
+
+.map-results ul li p{
+    margin: 0;
+}
+
+.map-results ul li a{
+    text-decoration: none;
+    font-size: small;
+    margin: 0;
+    margin-left: auto;
 }
 
 @media (max-width: 600px) {
     .map-container{
         height: 80%;
+    }
+    .side-panel-open{
+        width: 100%;
+        right: 0;
+        bottom: 100px;
+        border-radius: 0;
+    }
+    .map-results{
+        box-sizing: border-box;
+        width: 100%;
+        right: 0;
+        bottom: 100px;
+        border-radius: 0;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        box-shadow: none;
+        max-height: 350px;
     }
     
 }
@@ -13,6 +126,21 @@
 @media (max-height: 500px) {
     .map-container{
         height: 82%;
+    }
+    .side-panel-open{
+        bottom: 20px;
+    }
+    .map-results{
+        box-sizing: border-box;
+        right: 0;
+        bottom: 100px;
+        border-radius: 0;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        box-shadow: none;
+        top: 100px;
+        bottom: 0;
+        border-radius: 0;
     }
 }
 
