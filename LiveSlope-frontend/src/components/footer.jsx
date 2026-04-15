@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react'
-import favoriteIcon from '../img/favorite.svg'
-import logoutIcon from '../img/logout.svg'
-import profileIcon from '../img/profile.svg'
-import '../styles/headerAndFooter.css'
-import AuthContext from '../assets/auth-context'
-import getFavoriteSkiAreas from '../functions/getFavoriteSkiAreas'
-import { createPortal } from 'react-dom'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { changePasswordScheme } from '../zod-schemes/change-password-scheme'
-import SkiAreaCard from './ski-area-card'
-import Popup from './popup'
+import React, { useContext, useEffect, useState } from 'react';
+import favoriteIcon from '../img/favorite.svg';
+import logoutIcon from '../img/logout.svg';
+import profileIcon from '../img/profile.svg';
+import '../styles/headerAndFooter.css';
+import AuthContext from '../assets/auth-context';
+import getFavoriteSkiAreas from '../functions/getFavoriteSkiAreas';
+import { createPortal } from 'react-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { changePasswordScheme } from '../zod-schemes/change-password-scheme';
+import SkiAreaCard from './ski-area-card';
+import Popup from './popup';
 
-function Footer() {
+export default function Footer() {
 
 	/**
 	 * Component displaying the footer with icons or login button (only shown on smaller screens)
@@ -117,7 +117,5 @@ function Footer() {
 			</Popup>
 			}
 		</div>
-	)
+	);
 }
-
-export default Footer

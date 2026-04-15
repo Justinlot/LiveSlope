@@ -7,4 +7,4 @@ export const changePasswordScheme = z.object({
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwörter stimmen nicht überein",
     path: ["confirmPassword"],
-})
+});

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import MapContext from "../assets/map-context";
-import '../styles/ski-area-card.css'
-import favoriteIcon from '../img/favorite.svg'
+import '../styles/ski-area-card.css';
+import favoriteIcon from '../img/favorite.svg';
 
 export default function SkiAreaCard({ skiArea, index }) {
     /**

@@ -1,12 +1,12 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
-import '../styles/map.css'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import '../styles/map.css';
 import getNearSkiAreas from '../functions/getNearSkiAreas';
 import MapContext from '../assets/map-context';
 import SkiAreaCard from './ski-area-card';
 
-function MapView() {
+export default function MapView() {
 	/**
 	 * Component displaying the map using Leaflet
 	 */
@@ -79,7 +79,5 @@ function MapView() {
 				</button>
 			}
 		</>
-	)
+	);
 }
-
-export default MapView

@@ -1,6 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import '../styles/popup.css'
+import '../styles/popup.css';
 
 export default function Popup({ children, onClose }) {
     /**

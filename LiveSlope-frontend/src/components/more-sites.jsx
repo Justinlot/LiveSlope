@@ -1,7 +1,7 @@
-import React from 'react'
-import '../styles/more-sites.css'
+import React from 'react';
+import '../styles/more-sites.css';
 
-function MoreSites() {
+export default function MoreSites() {
   /**
    * Component displaying links to additional site information (only shown on larger screens)
    */
@@ -14,7 +14,5 @@ function MoreSites() {
         <div className='separator'>|</div>
         <a href='/privacy' className='site-link'>Datenschutz</a>
     </div>
-  )
+  );
 }
-
-export default MoreSites

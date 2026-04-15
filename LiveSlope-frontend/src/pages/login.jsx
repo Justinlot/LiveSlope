@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { useForm } from 'react-hook-form'
-import '../styles/login.css'
+import React, { useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import '../styles/login.css';
 import AuthContext from '../assets/auth-context';
 
-function Login() {
+export default function Login() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -31,7 +31,5 @@ function Login() {
             </div>
         </div>
     </div>
-  )
+  );
 }
-
-export default Login

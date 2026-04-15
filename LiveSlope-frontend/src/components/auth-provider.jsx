@@ -1,6 +1,6 @@
 import AuthContext from "../assets/auth-context";
 
-const AuthProvider = ({ children }) => {
+export default function AuthProvider({ children }) {
     /**
      * Context provider for authentication state
      */
@@ -41,5 +41,3 @@ const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
-export default AuthProvider;

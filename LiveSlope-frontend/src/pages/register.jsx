@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
-import '../styles/login.css'
-import { useForm } from 'react-hook-form'
-import { registerScheme } from '../zod-schemes/register-scheme'
-import { zodResolver } from '@hookform/resolvers/zod'
-import AuthContext from '../assets/auth-context'
+import React, { useContext } from 'react';
+import '../styles/login.css';
+import { useForm } from 'react-hook-form';
+import { registerScheme } from '../zod-schemes/register-scheme';
+import { zodResolver } from '@hookform/resolvers/zod';
+import AuthContext from '../assets/auth-context';
 
-function Register() {
+export default function Register() {
 
-  const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(registerScheme)})
+  const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(registerScheme)});
 
   const { register: registerUser } = useContext(AuthContext);
 
@@ -37,7 +37,5 @@ function Register() {
             </div>
         </div>
     </div>
-  )
+  );
 }
-
-export default Register
