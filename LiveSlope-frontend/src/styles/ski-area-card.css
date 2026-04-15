@@ -1,0 +1,62 @@
+.ski-area-element{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    cursor: pointer;
+}
+
+.ski-area-main{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: space-between;
+}
+
+.ski-area-text{
+    transition: opacity 0.1s;
+}
+
+.ski-area-text:hover{
+    opacity: 0.6;
+}
+
+.ski-area-text:active{
+    opacity: 0.4;
+}
+
+.ski-area-element p{
+    margin: 0;
+}
+
+.ski-area-element a{
+    text-decoration: none;
+    font-size: small;
+    margin: 0;
+    margin-left: auto;
+}
+
+.favorite-icon{
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+    opacity: 0.2;
+    transition: opacity 0.2s;
+}
+
+.favorite-icon:hover{
+    opacity: 0.4;
+}
+
+.favorite-icon:active{
+    opacity: 0.6;
+}
+
+.selected, .selected:hover, .selected:active{
+    opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .favorite-icon{
+        filter: invert(1);
+    }
+}

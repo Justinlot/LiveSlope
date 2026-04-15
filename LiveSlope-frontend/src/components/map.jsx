@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import '../styles/map.css'
 import getNearSkiAreas from '../functions/getNearSkiAreas';
+import MapContext from '../assets/map-context';
+import SkiAreaCard from './ski-area-card';
 
 function MapView() {
 	/**
@@ -11,7 +13,7 @@ function MapView() {
 
 	const mapRef = useRef(null);
 
-	const map = useRef(null);
+	const { map, setMap } = useContext(MapContext);
 
 	const [nearSkiAreas, setNearSkiAreas] = useState([]);
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
@@ -28,9 +30,10 @@ function MapView() {
 		});
 		setNearSkiAreas(getNearSkiAreas(map.current.getBounds()));
 		
-	}, [setNearSkiAreas]);
+		//eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [setNearSkiAreas, map.current]);
 
-	const renderSkiAreaMarkers = useCallback(() => {
+	useEffect(() => {
 		/**
 		 * Renders markers for the ski areas in the current state
 		 */
@@ -41,24 +44,20 @@ function MapView() {
 			L.marker([lat, lng]).addTo(map.current)
 				.bindPopup(`<b>${name}</b><br>Schwierigkeit: ${difficulty}<br><a href="https://www.google.com/maps/search/?api=1&query=Skigebiet+${name.split(' ').join('+')}" target="_blank">In Maps öffnen</a>`);
 		});
-	}, [nearSkiAreas]);
-
-	useEffect(() => {
-		renderSkiAreaMarkers();
-	}, [nearSkiAreas, renderSkiAreaMarkers]);
+	}, [nearSkiAreas, map]);
 
 
 	useEffect(() => {
 		if (!map.current) {
-			map.current = L.map(mapRef.current).setView([48, 9], 6);
-			map.current.locate({ setView: true, maxZoom: 16 });
+			setMap(L.map(mapRef.current).setView([48, 9], 6));
+			map.current.locate({ setView: true, maxZoom: 12 });
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(map.current);
 			
 			map.current.on('moveend', handleMapMove);
 		}
-	}, [handleMapMove]);
+	}, [handleMapMove, setMap, map]);
 
 	return (
 		<>
@@ -68,18 +67,7 @@ function MapView() {
 					{nearSkiAreas?.features?.length > 0 ?
 						<ul>
 							{nearSkiAreas.features.map((feature, index) => (
-								<li key={index} onClick={() => {
-									const [lng, lat] = feature.geometry.coordinates;
-									map.current.setView([lat, lng], 14);
-								}}>
-									<div className='ski-area-text'>
-										<b>{feature.properties.name}</b>
-										<p>Schwierigkeit: {feature.properties.difficulty}</p>
-									</div>
-									<a href={`https://www.google.com/maps/search/?api=1&query=Skigebiet+${feature.properties.name.split(' ').join('+')}`} target="_blank" rel="noopener noreferrer">
-										In Maps öffnen
-									</a>
-								</li>
+								<SkiAreaCard index={index} skiArea={feature}/>
 							))}
 						</ul>
 					: (<p>Kein Skigebiet in der Nähe gefunden.</p>)}
