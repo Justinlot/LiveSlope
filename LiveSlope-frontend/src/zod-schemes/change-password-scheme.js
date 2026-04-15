@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+/**
+ * Validation schema for the change-password form.
+ */
 export const changePasswordScheme = z.object({
     oldPassword: z.string().min(1, { message: "Altes Passwort ist erforderlich" }),
     password: z.string().min(1, { message: "Neues Passwort ist erforderlich" }).min(8, { message: "Passwort muss mindestens 8 Zeichen lang sein" }),
@@ -7,4 +10,4 @@ export const changePasswordScheme = z.object({
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwörter stimmen nicht überein",
     path: ["confirmPassword"],
-})
+});

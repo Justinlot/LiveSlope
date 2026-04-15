@@ -1,17 +1,13 @@
 import { useRef } from "react";
 import MapContext from "../assets/map-context";
 
+/**
+ * Provides the shared Leaflet map instance to descendant components.
+ */
 export default function MapProvider({ children }) {
-    /**
-     * Component for providing the map to child components
-     */
-
     const map = useRef(null);
 
     function setMap(mapInstance) {
-        /**
-         * Function to set the map instance
-         */
         map.current = mapInstance;
     }
 

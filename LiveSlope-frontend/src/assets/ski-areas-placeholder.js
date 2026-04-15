@@ -1,4 +1,6 @@
-// Placeholder data for ski areas in the Black Forest region
+/**
+ * Placeholder GeoJSON data for ski areas in the Black Forest region.
+ */
 const skiAreas = {
   "type": "FeatureCollection",
   "features": [

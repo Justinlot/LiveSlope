@@ -1,10 +1,10 @@
-import React from 'react'
-import Header from '../components/header'
-import MapView from '../components/map'
-import '../styles/home.css'
-import Footer from '../components/footer'
-import MoreSites from '../components/more-sites'
-import MapProvider from '../components/map-provider'
+import React from 'react';
+import Header from '../components/header';
+import MapView from '../components/map';
+import '../styles/home.css';
+import Footer from '../components/footer';
+import MoreSites from '../components/more-sites';
+import MapProvider from '../components/map-provider';
 
 function HomePage() {
   /**
@@ -19,7 +19,7 @@ function HomePage() {
         <Footer />
       </MapProvider>
     </div>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;

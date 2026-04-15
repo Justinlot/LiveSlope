@@ -1,15 +1,15 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
-import '../styles/map.css'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import '../styles/map.css';
 import getNearSkiAreas from '../functions/getNearSkiAreas';
 import MapContext from '../assets/map-context';
 import SkiAreaCard from './ski-area-card';
 
-function MapView() {
-	/**
-	 * Component displaying the map using Leaflet
-	 */
+/**
+ * Renders the Leaflet map and lists nearby ski areas for the current viewport.
+ */
+export default function MapView() {
 
 	const mapRef = useRef(null);
 
@@ -19,9 +19,6 @@ function MapView() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
 
 	const handleMapMove = useCallback(() => {
-		/**
-		 * Adds markers for ski areas within the current map bounds to the map
-		 */
 		if (!map.current) return;
 		map.current.eachLayer(layer => {
 			if (layer instanceof L.Marker) {
@@ -34,9 +31,6 @@ function MapView() {
 	}, [setNearSkiAreas, map.current]);
 
 	useEffect(() => {
-		/**
-		 * Renders markers for the ski areas in the current state
-		 */
 		if (!map.current) return;
 		nearSkiAreas?.features?.forEach(feature => {
 			const { name, difficulty } = feature.properties;
@@ -79,7 +73,5 @@ function MapView() {
 				</button>
 			}
 		</>
-	)
+	);
 }
-
-export default MapView

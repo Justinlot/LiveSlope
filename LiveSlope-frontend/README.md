@@ -1,16 +1,84 @@
-# React + Vite
+# LiveSlope Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for the LiveSlope application. The app is built with React and Vite and provides an interactive ski-area map together with login and registration pages.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This frontend represents the user interface for LiveSlope. The current version includes:
 
-## React Compiler
+- a home page with a Leaflet map
+- markers for ski areas from local sample data
+- a side panel with ski areas inside the current map bounds
+- login and registration pages with form validation
+- simple utility links for About, Imprint, and Privacy
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Note: Authentication is currently implemented as a placeholder. Ski areas are also loaded from local sample data instead of an external API.
 
-## Expanding the ESLint configuration
+## Technologies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19
+- Vite
+- React Router
+- Leaflet
+- React Hook Form
+- Zod
+
+## Project Structure
+
+```text
+src/
+	App.jsx                Routing and app wrapper
+	components/            Reusable UI components
+	functions/             Helper functions for data logic
+	pages/                 Pages such as home, login, and register
+	styles/                CSS files for the different sections
+	assets/                Contexts and sample data
+	zod-schemes/           Validation schemas
+```
+
+## Running Locally
+
+Make sure Node.js and npm are installed.
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+### Preview the production build
+
+```bash
+npm run preview
+```
+
+### Run linting
+
+```bash
+npm run lint
+```
+
+## Key Screens
+
+- Home page: map with automatically filtered ski areas in the visible region
+- Login: sign-in form with required fields
+- Register: form with Zod validation and password confirmation
+
+## Current Development State
+
+- Authentication methods are still placeholders and currently only log to the console.
+- Map markers are based on local ski-area data.
+- The map uses OpenStreetMap tiles via Leaflet.
+

@@ -1,13 +1,12 @@
 import { useContext, useState } from "react";
 import MapContext from "../assets/map-context";
-import '../styles/ski-area-card.css'
-import favoriteIcon from '../img/favorite.svg'
+import '../styles/ski-area-card.css';
+import favoriteIcon from '../img/favorite.svg';
 
+/**
+ * Renders a ski area entry with navigation and favorite toggling.
+ */
 export default function SkiAreaCard({ skiArea, index }) {
-    /**
-     * Component for displaying a ski area card with name and difficulty
-     */
-
     const { map } = useContext(MapContext);
 
     const [favorite, setFavorite] = useState(skiArea.properties.favorite);
