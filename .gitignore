@@ -1,0 +1,26 @@
+# Logs
+LiveSlope-frontend/logs
+LiveSlope-frontend/*.log
+LiveSlope-frontend/npm-debug.log*
+LiveSlope-frontend/yarn-debug.log*
+LiveSlope-frontend/yarn-error.log*
+LiveSlope-frontend/pnpm-debug.log*
+LiveSlope-frontend/lerna-debug.log*
+
+LiveSlope-frontend/package-lock.json
+
+LiveSlope-frontend/node_modules
+LiveSlope-frontend/dist
+LiveSlope-frontend/dist-ssr
+LiveSlope-frontend/*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

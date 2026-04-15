@@ -52,17 +52,19 @@ npm install
 npm run dev
 ```
 
-### Build for production
+### Build production image (Docker)
 
 ```bash
-npm run build
+docker build -t liveslope-frontend .
 ```
 
-### Preview the production build
+### Run production container (Docker)
 
 ```bash
-npm run preview
+docker run --rm -p 8080:80 liveslope-frontend
 ```
+
+The frontend is then available at `http://localhost:8080`.
 
 ### Run linting
 
