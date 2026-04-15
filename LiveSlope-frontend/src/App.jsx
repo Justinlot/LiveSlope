@@ -6,6 +6,9 @@ import Login from './pages/login';
 import Register from './pages/register';
 import AuthProvider from './components/auth-provider';
 
+/**
+ * Root application component that wires authentication and routing.
+ */
 export default function App() {
 
   return (

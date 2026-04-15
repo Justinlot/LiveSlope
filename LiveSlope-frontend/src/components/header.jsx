@@ -12,11 +12,10 @@ import { createPortal } from 'react-dom';
 import getFavoriteSkiAreas from '../functions/getFavoriteSkiAreas';
 import SkiAreaCard from './ski-area-card';
 
+/**
+ * Renders the main header with greeting, navigation menu, and user actions.
+ */
 export default function Header() {
-  /**
-   * Component displaying the header with welcome message and icons
-   */
-
 
   const { loggedIn, username, logout, changePassword } = useContext(AuthContext);
 

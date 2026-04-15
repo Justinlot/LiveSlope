@@ -6,10 +6,10 @@ import getNearSkiAreas from '../functions/getNearSkiAreas';
 import MapContext from '../assets/map-context';
 import SkiAreaCard from './ski-area-card';
 
+/**
+ * Renders the Leaflet map and lists nearby ski areas for the current viewport.
+ */
 export default function MapView() {
-	/**
-	 * Component displaying the map using Leaflet
-	 */
 
 	const mapRef = useRef(null);
 
@@ -19,9 +19,6 @@ export default function MapView() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
 
 	const handleMapMove = useCallback(() => {
-		/**
-		 * Adds markers for ski areas within the current map bounds to the map
-		 */
 		if (!map.current) return;
 		map.current.eachLayer(layer => {
 			if (layer instanceof L.Marker) {
@@ -34,9 +31,6 @@ export default function MapView() {
 	}, [setNearSkiAreas, map.current]);
 
 	useEffect(() => {
-		/**
-		 * Renders markers for the ski areas in the current state
-		 */
 		if (!map.current) return;
 		nearSkiAreas?.features?.forEach(feature => {
 			const { name, difficulty } = feature.properties;

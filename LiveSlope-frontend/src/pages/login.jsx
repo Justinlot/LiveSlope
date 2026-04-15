@@ -3,6 +3,9 @@ import { useForm } from 'react-hook-form';
 import '../styles/login.css';
 import AuthContext from '../assets/auth-context';
 
+/**
+ * Renders the login form and submits credentials to the auth context.
+ */
 export default function Login() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();

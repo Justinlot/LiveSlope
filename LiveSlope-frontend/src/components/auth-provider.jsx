@@ -1,10 +1,9 @@
 import AuthContext from "../assets/auth-context";
 
+/**
+ * Provides authentication state and placeholder auth actions to the app.
+ */
 export default function AuthProvider({ children }) {
-    /**
-     * Context provider for authentication state
-     */
-
     function login(username, password) {
         // Placeholder login function
         console.log(`Logging in with username: ${username} and password: ${password}`);

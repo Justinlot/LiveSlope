@@ -1,10 +1,10 @@
 import React from 'react';
 import '../styles/more-sites.css';
 
+/**
+ * Displays supplemental site links for larger screens.
+ */
 export default function MoreSites() {
-  /**
-   * Component displaying links to additional site information (only shown on larger screens)
-   */
   
   return (
     <div className='more-sites'>
