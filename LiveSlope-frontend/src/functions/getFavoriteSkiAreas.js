@@ -1,15 +1,9 @@
-const favoriteSkiAreas = [
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Feldberg",
-        "difficulty": "mittel"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [8.032, 47.873]
-      }
-    },
-];
+import skiAreas from "../assets/ski-areas-placeholder";
 
-export default favoriteSkiAreas;
+export default function getFavoriteSkiAreas() {
+    /**
+     * Function to get favorite ski areas for the user
+     * Currently returns a placeholder list of ski areas
+     */
+    return skiAreas.features.filter(feature => feature.properties.favorite);
+}

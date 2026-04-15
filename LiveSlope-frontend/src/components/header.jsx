@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { changePasswordScheme } from '../zod-schemes/change-password-scheme'
 import { createPortal } from 'react-dom'
+import getFavoriteSkiAreas from '../functions/getFavoriteSkiAreas'
+import SkiAreaCard from './ski-area-card'
 
 function Header() {
   /**
@@ -25,6 +27,9 @@ function Header() {
   const [popupOpen, setPopupOpen] = useState(false);
 
   const [profilePanelOpen, setProfilePanelOpen] = useState(false);
+  const [favoritePanelOpen, setFavoritePanelOpen] = useState(false);
+
+  const favoriteSkiAreas = getFavoriteSkiAreas();
 
 
 
@@ -56,6 +61,7 @@ function Header() {
               src={favoriteIcon}
               alt="Favorite Icon"
               className="icon"
+              onClick={() => setFavoritePanelOpen(!favoritePanelOpen)}
           />
           <img
               src={profileIcon}
@@ -79,13 +85,13 @@ function Header() {
       </div>
       <div className='menu'>
         <button className='menu-icon' onClick={() => setMenuOpen(!menuOpen)}>⋮</button>
-        {menuOpen &&
+        {menuOpen && createPortal(
           <div className='menu-items'>
             <a href='/about' className='menu-item'>Über Uns</a>
             <a href='/imprint' className='menu-item'>Impressum</a>
             <a href='/privacy' className='menu-item'>Datenschutz</a>
-          </div>
-        }
+          </div>, document.body
+        )}
       </div>
       {profilePanelOpen && createPortal(
         <div className='panel'>
@@ -93,6 +99,19 @@ function Header() {
           <p>Benutzername: {username}</p>
           <button onClick={() => setPopupOpen(true)}>Passwort ändern</button>
         </div>, document.body
+      )}
+
+      {favoritePanelOpen && createPortal(
+        <div className='panel favorites'>
+					{favoriteSkiAreas?.length > 0 ?
+						<ul>
+							{favoriteSkiAreas.map((feature, index) => (
+								<SkiAreaCard skiArea={feature} index={index} key={index} />
+							))}
+						</ul>
+					: (<p>Kein Skigebiet in der Nähe gefunden.</p>)}
+					<button className='side-panel-close' onClick={() => setFavoritePanelOpen(false)}>Schließen</button>
+				</div>, document.body
       )}
       {popupOpen &&
         <Popup onClose={() => setPopupOpen(false)}>

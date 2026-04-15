@@ -6,7 +6,8 @@ const skiAreas = {
       "type": "Feature",
       "properties": {
         "name": "Feldberg",
-        "difficulty": "mittel"
+        "difficulty": "mittel",
+        "favorite": true
       },
       "geometry": {
         "type": "Point",
@@ -83,7 +84,8 @@ const skiAreas = {
       "type": "Feature",
       "properties": {
         "name": "Bernau im Schwarzwald",
-        "difficulty": "leicht"
+        "difficulty": "leicht",
+        "favorite": true
       },
       "geometry": {
         "type": "Point",

@@ -65,39 +65,7 @@
     gap: 10px;
 }
 
-.map-results ul li{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    cursor: pointer;
-}
 
-.ski-area-text{
-    transform: opacity 0.1s;
-}
-
-.ski-area-text:hover{
-    opacity: 0.6;
-}
-
-.ski-area-text:active{
-    opacity: 0.4;
-}
-
-.map-results ul li p{
-    margin: 0;
-}
-
-.map-results ul li p{
-    margin: 0;
-}
-
-.map-results ul li a{
-    text-decoration: none;
-    font-size: small;
-    margin: 0;
-    margin-left: auto;
-}
 
 @media (max-width: 600px) {
     .map-container{
