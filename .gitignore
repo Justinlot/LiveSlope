@@ -24,3 +24,10 @@ LiveSlope-frontend/*.local
 *.njsproj
 *.sln
 *.sw?
+
+
+backend/__pycache__/
+
+.env
+
+test.rest
