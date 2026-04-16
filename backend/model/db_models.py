@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKeyConstraint, Integer, String, Date, Float
+from sqlalchemy import Column, ForeignKeyConstraint, Integer, String, Float
 from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
@@ -7,9 +7,8 @@ class User(Base):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
-    username = Column(String)
+    username = Column(String, unique=True)
     password_hash = Column(String)
-    created_at = Column(Date)
 
 class Slope(Base):
     __tablename__ = "slope"
@@ -19,7 +18,6 @@ class Slope(Base):
     difficulty = Column(String)
     latitude = Column(Float)
     longitude = Column(Float)
-    created_at = Column(Date)
 
 class Favorite(Base):
     __tablename__ = "favorite"
@@ -27,6 +25,5 @@ class Favorite(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer)
     slope_id = Column(Integer)
-    created_at = Column(Date)
     ForeignKeyConstraint(['user_id'], ['user.id']),
     ForeignKeyConstraint(['slope_id'], ['slope.id'])
