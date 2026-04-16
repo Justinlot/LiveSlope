@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
-from backend.utils.auth_session import require_session
+from utils.auth_session import require_session
 from model.request_models import UserCreateRequest
 from utils.database import get_db
 from model.db_models import User
 from model.response_models import UserResponse
 from utils.password import hash_password, verify_password
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 router = APIRouter()
 
@@ -22,7 +22,7 @@ async def register(request: Request, body: UserCreateRequest, db: Session = Depe
     db.commit()
     db.refresh(user)
     request.session["user_id"] = user.id
-    request.session["expires_at"] = (datetime.now(tz=datetime.timezone.utc) + timedelta(days=1)).isoformat()
+    request.session["expires_at"] = (datetime.now(tz=timezone.utc) + timedelta(days=1)).isoformat()
     return user
 
 
@@ -34,7 +34,7 @@ async def login(request: Request, body: UserCreateRequest, db: Session = Depends
     if not verify_password(body.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid username or password")
     request.session["user_id"] = user.id
-    request.session["expires_at"] = (datetime.now(tz=datetime.timezone.utc) + timedelta(days=1)).isoformat()
+    request.session["expires_at"] = (datetime.now(tz=timezone.utc) + timedelta(days=1)).isoformat()
     return user
 
 @router.post("/logout")
