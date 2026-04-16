@@ -3,12 +3,13 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 from utils.database import get_db
 from starlette.middleware.sessions import SessionMiddleware
-from routes import auth, user
+from routes import auth, user, slope
 
 
 app = FastAPI()
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(user.router, prefix="/user", tags=["user"])
+app.include_router(slope.router, prefix="/slopes", tags=["slopes"])
 
 app.add_middleware(
     SessionMiddleware,

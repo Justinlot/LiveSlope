@@ -15,6 +15,7 @@ class Slope(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    osm_id = Column(Integer, unique=True)
     difficulty = Column(String)
     latitude = Column(Float)
     longitude = Column(Float)
