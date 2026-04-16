@@ -9,7 +9,6 @@ class UserLoginRequest(BaseModel):
     password: str
 
 class PasswordUpdateRequest(BaseModel):
-    username: str
     old_password: str
     new_password: str
 
