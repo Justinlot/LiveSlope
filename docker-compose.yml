@@ -13,6 +13,18 @@ services:
       db:
         condition: service_healthy
 
+  importer:
+    build:
+      context: ./ski-area-importer
+      dockerfile: Dockerfile
+    image: liveslope-importer:latest
+    container_name: liveslope-importer
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    depends_on:
+      db:
+        condition: service_healthy
+
   db:
     image: postgres:16-alpine
     container_name: liveslope-db
