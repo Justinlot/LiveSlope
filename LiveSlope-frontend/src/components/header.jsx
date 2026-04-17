@@ -17,7 +17,7 @@ import SkiAreaCard from './ski-area-card';
  */
 export default function Header() {
 
-  const { username, logout, changePassword } = useContext(AuthContext);
+  const { username, logout, changePassword, deleteAccount } = useContext(AuthContext);
 
   const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(changePasswordScheme)});
 
@@ -98,6 +98,7 @@ export default function Header() {
           <h3>Profil</h3>
           <p>Benutzername: {username}</p>
           <button onClick={() => setPopupOpen(true)}>Passwort ändern</button>
+          <button className='red-button' onClick={async () => await confirm("Möchten Sie Ihren Account wirklich löschen?") && deleteAccount()}>Account löschen</button>
         </div>, document.body
       )}
 
@@ -118,8 +119,11 @@ export default function Header() {
           <div className='popup-profile'>
             <h2>Passwort ändern</h2>
             <form onSubmit={handleSubmit((data) => {
-              changePassword(data.oldPassword, data.password);
-              setPopupOpen(false);
+              changePassword(data.oldPassword, data.password).then(success => {
+                if (success) {
+                  setPopupOpen(false);
+                }
+              });
             })}>
               <label htmlFor="oldPassword">Altes Passwort:</label>
               <input type="password" id="oldPassword" {...register('oldPassword')} />
