@@ -18,7 +18,7 @@ import Popup from './popup';
 export default function Footer() {
 	const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(changePasswordScheme)});
 
-	const { username, loggedIn, logout, changePassword } = useContext(AuthContext);
+	const { username, logout, changePassword } = useContext(AuthContext);
 
 	const [popupOpen, setPopupOpen] = useState(false);
 
@@ -45,7 +45,7 @@ export default function Footer() {
 
 	return (
 		<div className='footer'>
-			{loggedIn ?
+			{username ?
 				<>
 					<img
 						src={favoriteIcon}

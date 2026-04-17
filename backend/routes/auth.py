@@ -19,7 +19,7 @@ async def register(request: Request, body: UserCreateRequest, db: Session = Depe
     hashed_password = hash_password(password)
     existing_user = db.query(User).filter(User.username == body.username).first()
     if existing_user is not None:
-        raise HTTPException(status_code=400, detail="Username already exists")
+        raise HTTPException(status_code=400, detail="Benutzername bereits vergeben")
     user = User(username=body.username, password_hash=hashed_password)
     db.add(user)
     db.commit()
@@ -34,9 +34,9 @@ async def login(request: Request, body: UserCreateRequest, db: Session = Depends
     """Authenticate an existing user and start a session."""
     user = db.query(User).filter(User.username == body.username).first()
     if user is None:
-        raise HTTPException(status_code=400, detail="Invalid username or password")
+        raise HTTPException(status_code=400, detail="Nutzer existiert nicht")
     if not verify_password(body.password, user.password_hash):
-        raise HTTPException(status_code=401, detail="Invalid username or password")
+        raise HTTPException(status_code=401, detail="Ungültiges Passwort")
     request.session["user_id"] = user.id
     request.session["expires_at"] = (datetime.now(tz=timezone.utc) + timedelta(days=1)).isoformat()
     return user
@@ -52,5 +52,5 @@ async def get_current_user(request: Request, user_id: int = Depends(require_sess
     """Return the currently authenticated user."""
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Benutzer nicht gefunden")
     return user

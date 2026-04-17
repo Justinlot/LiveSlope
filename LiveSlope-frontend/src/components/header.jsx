@@ -17,7 +17,7 @@ import SkiAreaCard from './ski-area-card';
  */
 export default function Header() {
 
-  const { loggedIn, username, logout, changePassword } = useContext(AuthContext);
+  const { username, logout, changePassword } = useContext(AuthContext);
 
   const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(changePasswordScheme)});
 
@@ -53,8 +53,9 @@ export default function Header() {
 
   return (
     <div className='header'>
-      <h2>Willkommen{loggedIn ? `, ${username}` : ''}!</h2>
-      <div className="icons">{loggedIn ?
+      <h2>Willkommen{username ? `, ${username}` : ''}!</h2>
+      <div className="icons">{username ?
+
         <>
           <img
               src={favoriteIcon}
