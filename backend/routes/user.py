@@ -1,3 +1,5 @@
+"""User management routes for account updates and deletion."""
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from utils.auth_session import require_session
@@ -11,6 +13,7 @@ router = APIRouter()
 
 @router.put("/password")
 async def update_password(request: Request, body: PasswordUpdateRequest, user_id: int = Depends(require_session), db: Session = Depends(get_db)):
+    """Update the password for the authenticated user."""
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -23,6 +26,7 @@ async def update_password(request: Request, body: PasswordUpdateRequest, user_id
 
 @router.delete("/")
 async def delete_account(request: Request, user_id: int = Depends(require_session), db: Session = Depends(get_db)):
+    """Delete the authenticated user's account and clear the session."""
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")

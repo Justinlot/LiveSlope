@@ -1,3 +1,9 @@
+"""Application entry point for the LiveSlope backend.
+
+This module creates the FastAPI app, registers routers, and exposes a small
+health check plus a database connectivity endpoint.
+"""
+
 from fastapi import FastAPI, Depends
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -23,10 +29,12 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
+    """Return a simple health message for the API root."""
     return {"message": "Hello World"}
 
 @app.get("/db")
 async def test_db(db: Session = Depends(get_db)):
+    """Verify that the application can execute a trivial database query."""
     result = db.execute(text("SELECT 1")).fetchone()
     if result is None:
         return {"message": "Database connection failed"}

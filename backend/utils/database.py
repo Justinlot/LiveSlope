@@ -1,3 +1,5 @@
+"""Database engine and session helpers for the backend."""
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
@@ -13,6 +15,7 @@ SessionLocal = sessionmaker(
 )
 
 def get_db() -> Generator[Session, None, None]:
+    """Yield a SQLAlchemy session and ensure it is closed afterwards."""
     db = SessionLocal()
     try:
         yield db

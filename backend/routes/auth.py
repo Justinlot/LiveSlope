@@ -1,3 +1,5 @@
+"""Authentication routes for registration, login, and session handling."""
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from utils.auth_session import require_session
@@ -12,6 +14,7 @@ router = APIRouter()
 
 @router.post("/register", response_model=UserResponse)
 async def register(request: Request, body: UserCreateRequest, db: Session = Depends(get_db)):
+    """Create a new user account and start a session for the new user."""
     password = body.password
     hashed_password = hash_password(password)
     existing_user = db.query(User).filter(User.username == body.username).first()
@@ -28,6 +31,7 @@ async def register(request: Request, body: UserCreateRequest, db: Session = Depe
 
 @router.post("/login", response_model=UserResponse)
 async def login(request: Request, body: UserCreateRequest, db: Session = Depends(get_db)):
+    """Authenticate an existing user and start a session."""
     user = db.query(User).filter(User.username == body.username).first()
     if user is None:
         raise HTTPException(status_code=400, detail="Invalid username or password")
@@ -39,11 +43,13 @@ async def login(request: Request, body: UserCreateRequest, db: Session = Depends
 
 @router.post("/logout")
 async def logout(request: Request):
+    """Clear the current session."""
     request.session.clear()
     return {"message": "Logged out successfully"}
 
 @router.get("/me", response_model=UserResponse)
 async def get_current_user(request: Request, user_id: int = Depends(require_session), db: Session = Depends(get_db)):
+    """Return the currently authenticated user."""
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")

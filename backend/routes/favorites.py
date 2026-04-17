@@ -1,3 +1,5 @@
+"""Routes for reading and modifying favorite slopes."""
+
 from fastapi import APIRouter, Depends, HTTPException
 from utils.database import get_db
 from utils.auth_session import require_session
@@ -10,13 +12,15 @@ router = APIRouter()
 
 @router.get("/", response_model=list[SlopeResponse])
 async def get_favorites(user_id: int = Depends(require_session), db: Session = Depends(get_db)):
+    """Return the slopes favorited by the current user."""
     result = db.execute(text("SELECT slope_id FROM favorite WHERE user_id = :user_id"), {"user_id": user_id})
     slope_ids = [row[0] for row in result.fetchall()]
     slopes = db.query(Slope).filter(Slope.id.in_(slope_ids)).all()
-    return [SlopeResponse.from_orm(slope) for slope in slopes]
+    return slopes
 
 @router.post("/{slope_id}", response_model=SlopeResponse)
 async def add_favorite(slope_id: int, user_id: int = Depends(require_session), db: Session = Depends(get_db)):
+    """Add a slope to the current user's favorites."""
     slope = db.query(Slope).filter(Slope.id == slope_id).first()
     if not slope:
         raise HTTPException(404, "Slope not found")
@@ -26,6 +30,7 @@ async def add_favorite(slope_id: int, user_id: int = Depends(require_session), d
 
 @router.delete("/{slope_id}")
 async def remove_favorite(slope_id: int, user_id: int = Depends(require_session), db: Session = Depends(get_db)):
+    """Remove a slope from the current user's favorites."""
     slope = db.query(Slope).filter(Slope.id == slope_id).first()
     if not slope:
         raise HTTPException(404, "Slope not found")
