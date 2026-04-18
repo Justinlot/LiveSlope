@@ -1,10 +1,21 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import '../styles/map.css';
 import getNearSkiAreas from '../functions/getNearSkiAreas';
 import MapContext from '../assets/map-context';
 import SkiAreaCard from './ski-area-card';
+
+// Explicit asset URLs are needed so marker icons resolve correctly after bundling.
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+	iconRetinaUrl: markerIcon2x,
+	iconUrl: markerIcon,
+	shadowUrl: markerShadow,
+});
 
 /**
  * Renders the Leaflet map and lists nearby ski areas for the current viewport.

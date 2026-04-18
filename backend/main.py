@@ -28,7 +28,7 @@ app.add_middleware(
     same_site="lax"
 )
 
-origin = os.getenv("Frontend_URL", "http://localhost:5173")
+origin = os.getenv("FRONTEND_URL")
 
 app.add_middleware(
     CORSMiddleware,
