@@ -2,9 +2,11 @@
  * Placeholder function to return ski areas within the given map bounds
  * This should be replaced with an actual API call to fetch ski areas based on the map bounds
  */
+import getApiBaseUrl from "./api-base-url";
+
 export default async function getNearSkiAreas(bounds) {
 
-    const API_URL = "http://localhost:8000";
+    const API_URL = getApiBaseUrl();
 
 
     let minLat = bounds.getSouthWest().lat;
@@ -19,7 +21,7 @@ export default async function getNearSkiAreas(bounds) {
 
     const nearSkiAreas = [];
     try {
-        const response = await fetch(`${API_URL}/slopes?min_lat=${minLat.toFixed(3)}&max_lat=${maxLat.toFixed(3)}&min_lon=${minLng.toFixed(3)}&max_lon=${maxLng.toFixed(3)}`,{
+        const response = await fetch(API_URL + `slopes/?min_lat=${minLat.toFixed(3)}&max_lat=${maxLat.toFixed(3)}&min_lon=${minLng.toFixed(3)}&max_lon=${maxLng.toFixed(3)}`,{
             method: "GET",
             credentials: "include",
         });

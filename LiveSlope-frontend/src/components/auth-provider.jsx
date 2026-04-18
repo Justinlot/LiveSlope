@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import AuthContext from "../assets/auth-context";
 import { useNavigate } from "react-router-dom";
+import getApiBaseUrl from "../functions/api-base-url";
 /**
  * Provides authentication state and placeholder auth actions to the app.
  */
 export default function AuthProvider({ children }) {
 
-    const API_URL = "http://localhost:8000/";
+    const API_URL = getApiBaseUrl();
 
     const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ export default function AuthProvider({ children }) {
         }).catch(error => {
             console.error("Fehler:", error);
         });
-    }, []);
+    }, [API_URL]);
 
     async function login(username, password) {
         try{

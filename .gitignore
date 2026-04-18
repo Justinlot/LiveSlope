@@ -28,6 +28,6 @@ LiveSlope-frontend/*.local
 
 */__pycache__/
 
-.env
+
 
 test.rest

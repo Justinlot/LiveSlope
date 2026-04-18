@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import MapContext from "../assets/map-context";
 import '../styles/ski-area-card.css';
 import favoriteIcon from '../img/favorite.svg';
+import getApiBaseUrl from "../functions/api-base-url";
 
 /**
  * Renders a ski area entry with navigation and favorite toggling.
@@ -11,7 +12,7 @@ export default function SkiAreaCard({ skiArea, index }) {
 
     const [favorite, setFavorite] = useState(skiArea.properties.favorite);
 
-    const API_URL = "http://localhost:8000/";
+    const API_URL = getApiBaseUrl();
 
     const toggleFavorite = async (isFavorite) => {
         try {

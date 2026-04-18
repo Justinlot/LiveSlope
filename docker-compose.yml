@@ -1,4 +1,13 @@
 services:
+  frontend:
+    build:
+      context: ./LiveSlope-frontend
+      dockerfile: Dockerfile
+    image: liveslope-frontend:latest
+    container_name: liveslope-frontend
+    ports:
+      - "80:80"
+
   backend:
     build:
       context: ./backend
@@ -8,7 +17,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      Frontend_URL: http://localhost:5173
+      FRONTEND_URL: http://frontend:80
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     depends_on:
       db:
