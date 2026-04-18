@@ -20,12 +20,14 @@ export default function MapView() {
 
 	const handleMapMove = useCallback(() => {
 		if (!map.current) return;
-		map.current.eachLayer(layer => {
-			if (layer instanceof L.Marker) {
-				map.current.removeLayer(layer);
-			}
+		getNearSkiAreas(map.current.getBounds()).then(areas => {
+			map.current.eachLayer(layer => {
+				if (layer instanceof L.Marker) {
+					map.current.removeLayer(layer);
+				}
+			});
+			setNearSkiAreas(areas);
 		});
-		setNearSkiAreas(getNearSkiAreas(map.current.getBounds()));
 		
 		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [setNearSkiAreas, map.current]);
@@ -36,7 +38,7 @@ export default function MapView() {
 			const { name, difficulty } = feature.properties;
 			const [lng, lat] = feature.geometry.coordinates;
 			L.marker([lat, lng]).addTo(map.current)
-				.bindPopup(`<b>${name}</b><br>Schwierigkeit: ${difficulty}<br><a href="https://www.google.com/maps/search/?api=1&query=Skigebiet+${name.split(' ').join('+')}" target="_blank">In Maps öffnen</a>`);
+				.bindPopup(`<b>${name}</b><br>Schwierigkeit: ${difficulty}<br><a href="https://www.google.com/maps/?q=${lat},${lng}" target="_blank">In Maps öffnen</a>`);
 		});
 	}, [nearSkiAreas, map]);
 

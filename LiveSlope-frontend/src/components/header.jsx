@@ -28,7 +28,15 @@ export default function Header() {
   const [profilePanelOpen, setProfilePanelOpen] = useState(false);
   const [favoritePanelOpen, setFavoritePanelOpen] = useState(false);
 
-  const favoriteSkiAreas = getFavoriteSkiAreas();
+  const [favoriteSkiAreas, setFavoriteSkiAreas] = useState(null);
+
+  useEffect(() => {
+    if (username && favoritePanelOpen) {
+      getFavoriteSkiAreas().then(data => {
+        setFavoriteSkiAreas(data);
+      });
+    }
+  }, [favoritePanelOpen, username]);
 
 
 

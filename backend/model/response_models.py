@@ -15,4 +15,5 @@ class SlopeResponse(BaseModel):
     difficulty: str
     latitude: float
     longitude: float
+    favorite: bool
 
