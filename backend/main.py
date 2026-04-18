@@ -5,11 +5,13 @@ health check plus a database connectivity endpoint.
 """
 
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from utils.database import get_db
 from starlette.middleware.sessions import SessionMiddleware
 from routes import auth, user, slope, favorites
+import os
 
 
 app = FastAPI()
@@ -24,6 +26,16 @@ app.add_middleware(
     max_age=60 * 60 * 24, # 1 day
     https_only=False,
     same_site="lax"
+)
+
+origin = os.getenv("Frontend_URL", "http://localhost:5173")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[origin],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

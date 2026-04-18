@@ -16,9 +16,9 @@ async def update_password(request: Request, body: PasswordUpdateRequest, user_id
     """Update the password for the authenticated user."""
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Benutzer nicht gefunden")
     if not verify_password(body.old_password, user.password_hash):
-        raise HTTPException(status_code=400, detail="Invalid old password")
+        raise HTTPException(status_code=400, detail="Ungültiges altes Passwort")
     user.password_hash = hash_password(body.new_password)
     db.commit()
     return user
@@ -29,8 +29,8 @@ async def delete_account(request: Request, user_id: int = Depends(require_sessio
     """Delete the authenticated user's account and clear the session."""
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Benutzer nicht gefunden")
     db.delete(user)
     db.commit()
     request.session.clear()
-    return {"message": "Account deleted successfully"}
+    return {"detail": "Account erfolgreich gelöscht"}

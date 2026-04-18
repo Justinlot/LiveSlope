@@ -10,13 +10,42 @@ from model.response_models import SlopeResponse
 
 router = APIRouter()
 
-@router.get("/", response_model=list[SlopeResponse])
+@router.get("/")
 async def get_favorites(user_id: int = Depends(require_session), db: Session = Depends(get_db)):
     """Return the slopes favorited by the current user."""
     result = db.execute(text("SELECT slope_id FROM favorite WHERE user_id = :user_id"), {"user_id": user_id})
     slope_ids = [row[0] for row in result.fetchall()]
     slopes = db.query(Slope).filter(Slope.id.in_(slope_ids)).all()
-    return slopes
+
+    res = []
+    for slope in slopes:
+        res.append(SlopeResponse(
+            id=slope.id,
+            name=slope.name,
+            difficulty=slope.difficulty,
+            latitude=slope.latitude,
+            longitude=slope.longitude,
+            favorite=True
+        ))
+
+    return [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "difficulty": slope.difficulty,
+                "coordinates": [slope.longitude, slope.latitude]
+            },
+            "properties": {
+                "id": slope.id,
+                "osm_id": slope.osm_id,
+                "name": slope.name,
+                "difficulty": slope.difficulty,
+                "favorite": True
+            }
+        }
+            for slope in slopes
+        ]
 
 @router.post("/{slope_id}", response_model=SlopeResponse)
 async def add_favorite(slope_id: int, user_id: int = Depends(require_session), db: Session = Depends(get_db)):
@@ -26,7 +55,17 @@ async def add_favorite(slope_id: int, user_id: int = Depends(require_session), d
         raise HTTPException(404, "Slope not found")
     db.execute(text("INSERT INTO favorite (user_id, slope_id) VALUES (:user_id, :slope_id)"), {"user_id": user_id, "slope_id": slope_id})
     db.commit()
-    return slope
+
+    res = SlopeResponse(
+        id=slope.id,
+        name=slope.name,
+        difficulty=slope.difficulty,
+        latitude=slope.latitude,
+        longitude=slope.longitude,
+        favorite=True
+    )
+
+    return res
 
 @router.delete("/{slope_id}")
 async def remove_favorite(slope_id: int, user_id: int = Depends(require_session), db: Session = Depends(get_db)):

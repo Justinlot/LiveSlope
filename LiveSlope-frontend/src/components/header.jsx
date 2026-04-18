@@ -17,7 +17,7 @@ import SkiAreaCard from './ski-area-card';
  */
 export default function Header() {
 
-  const { loggedIn, username, logout, changePassword } = useContext(AuthContext);
+  const { username, logout, changePassword, deleteAccount } = useContext(AuthContext);
 
   const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(changePasswordScheme)});
 
@@ -28,7 +28,15 @@ export default function Header() {
   const [profilePanelOpen, setProfilePanelOpen] = useState(false);
   const [favoritePanelOpen, setFavoritePanelOpen] = useState(false);
 
-  const favoriteSkiAreas = getFavoriteSkiAreas();
+  const [favoriteSkiAreas, setFavoriteSkiAreas] = useState(null);
+
+  useEffect(() => {
+    if (username && favoritePanelOpen) {
+      getFavoriteSkiAreas().then(data => {
+        setFavoriteSkiAreas(data);
+      });
+    }
+  }, [favoritePanelOpen, username]);
 
 
 
@@ -53,8 +61,9 @@ export default function Header() {
 
   return (
     <div className='header'>
-      <h2>Willkommen{loggedIn ? `, ${username}` : ''}!</h2>
-      <div className="icons">{loggedIn ?
+      <h2>Willkommen{username ? `, ${username}` : ''}!</h2>
+      <div className="icons">{username ?
+
         <>
           <img
               src={favoriteIcon}
@@ -97,6 +106,7 @@ export default function Header() {
           <h3>Profil</h3>
           <p>Benutzername: {username}</p>
           <button onClick={() => setPopupOpen(true)}>Passwort ändern</button>
+          <button className='red-button' onClick={async () => await confirm("Möchten Sie Ihren Account wirklich löschen?") && deleteAccount()}>Account löschen</button>
         </div>, document.body
       )}
 
@@ -117,8 +127,11 @@ export default function Header() {
           <div className='popup-profile'>
             <h2>Passwort ändern</h2>
             <form onSubmit={handleSubmit((data) => {
-              changePassword(data.oldPassword, data.password);
-              setPopupOpen(false);
+              changePassword(data.oldPassword, data.password).then(success => {
+                if (success) {
+                  setPopupOpen(false);
+                }
+              });
             })}>
               <label htmlFor="oldPassword">Altes Passwort:</label>
               <input type="password" id="oldPassword" {...register('oldPassword')} />

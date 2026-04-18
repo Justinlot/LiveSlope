@@ -18,14 +18,21 @@ import Popup from './popup';
 export default function Footer() {
 	const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(changePasswordScheme)});
 
-	const { username, loggedIn, logout, changePassword } = useContext(AuthContext);
+	const { username, logout, changePassword } = useContext(AuthContext);
 
 	const [popupOpen, setPopupOpen] = useState(false);
 
 	const [profilePanelOpen, setProfilePanelOpen] = useState(false);
 	const [favoritePanelOpen, setFavoritePanelOpen] = useState(false);
+	const [favoriteSkiAreas, setFavoriteSkiAreas] = useState(null);
 
-	const favoriteSkiAreas = getFavoriteSkiAreas();
+	useEffect(() => {
+		if (username && favoritePanelOpen) {
+			getFavoriteSkiAreas().then(data => {
+				setFavoriteSkiAreas(data);
+			});
+		}
+	}, [favoritePanelOpen, username]);
 
 
 	useEffect(() => {
@@ -45,7 +52,7 @@ export default function Footer() {
 
 	return (
 		<div className='footer'>
-			{loggedIn ?
+			{username ?
 				<>
 					<img
 						src={favoriteIcon}
