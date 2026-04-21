@@ -6,6 +6,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import AuthProvider from './components/auth-provider';
 import About from './pages/about';
+import Privacy from './pages/privacy';
 
 /**
  * Root application component that wires authentication and routing.
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
