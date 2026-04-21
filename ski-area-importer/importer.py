@@ -38,15 +38,13 @@ def generate_tiles(south, west, north, east, step=2.0):
 
 def fetch_tile(s, w, n, e):
     print(f"Fetching tile: S={s}, W={w}, N={n}, E={e}")
-    query = f"""[out:json][timeout:25];
-        (
-        nwr["landuse"="winter_sports"]({s},{w},{n},{e});
-        nwr["landuse"="recreation_ground"]["sport"="skiing"]({s},{w},{n},{e});
-        nwr["leisure"="sports_centre"]["sport"="skiing"]({s},{w},{n},{e});
-        nwr["site"="piste"]({s},{w},{n},{e});
-        nwr["piste:type"]({s},{w},{n},{e});
-        );
-        out tags center geom;
+    query = f"""
+    [out:json][timeout:25];
+    (
+    way["piste:type"="downhill"]({s},{w},{n},{e});
+    way["aerialway"]({s},{w},{n},{e});
+    );
+    out geom;
     """
 
     res = requests.post(OVERPASS_URL, data=query)
