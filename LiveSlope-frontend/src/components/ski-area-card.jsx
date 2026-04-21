@@ -48,7 +48,7 @@ export default function SkiAreaCard({ skiArea, index }) {
                     toggleFavorite(!favorite);
                 }} />
             </div>
-            <a href={`https://www.google.com/maps/search/?api=1&query=Skigebiet+${skiArea.properties.name.split(' ').join('+')}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://www.google.com/maps/?q=${skiArea.geometry.coordinates[0]},${skiArea.geometry.coordinates[1]}`} target="_blank" rel="noopener noreferrer">
                 In Maps öffnen
             </a>
         </li>
