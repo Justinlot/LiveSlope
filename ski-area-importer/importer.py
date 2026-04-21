@@ -4,9 +4,12 @@ from model import Slope
 import datetime
 from sqlalchemy.dialects.postgresql import insert
 from database import get_db
-from sqlalchemy import text
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+OVERPASS_HEADERS = {
+    "User-Agent": "LiveSlope ski-area-importer/1.0 (+local development)",
+    "Accept": "application/json",
+}
 
 def sleep_until(hour=3):
     now = datetime.datetime.now()
@@ -47,10 +50,16 @@ def fetch_tile(s, w, n, e):
     out geom;
     """
 
-    res = requests.post(OVERPASS_URL, data=query)
+    res = requests.post(
+        OVERPASS_URL,
+        data={"data": query},
+        headers=OVERPASS_HEADERS,
+        timeout=60,
+    )
 
     if res.status_code != 200:
         print("HTTP Error:", res.status_code)
+        print(res.text[:300])
         return None
 
     if not res.text.strip():
