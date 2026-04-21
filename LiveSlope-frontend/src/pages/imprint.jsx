@@ -20,7 +20,7 @@ export default function Imprint() {
                             <p>
                                 LiveSlope (Hobbyprojekt)
                                 <br />
-                                Kontakt: liveslope@atomicmail.io
+                                Kontakt: <a href="mailto:liveslope@atomicmail.io">liveslope@atomicmail.io</a>
                             </p>
                         </section>
 
