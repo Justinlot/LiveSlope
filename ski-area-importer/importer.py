@@ -40,11 +40,13 @@ def fetch_tile(s, w, n, e):
     print(f"Fetching tile: S={s}, W={w}, N={n}, E={e}")
     query = f"""[out:json][timeout:25];
         (
-        relation["piste:type"="skiarea"]({s},{w},{n},{e});
-        way["landuse"="winter_sports"]({s},{w},{n},{e});
-        relation["landuse"="winter_sports"]({s},{w},{n},{e});
+        nwr["landuse"="winter_sports"]({s},{w},{n},{e});
+        nwr["landuse"="recreation_ground"]["sport"="skiing"]({s},{w},{n},{e});
+        nwr["leisure"="sports_centre"]["sport"="skiing"]({s},{w},{n},{e});
+        nwr["site"="piste"]({s},{w},{n},{e});
+        nwr["piste:type"]({s},{w},{n},{e});
         );
-        out geom;
+        out tags center geom;
     """
 
     res = requests.post(OVERPASS_URL, data=query)
@@ -97,19 +99,26 @@ def update_slopes():
             continue
 
         geom = slope.get("geometry", [])
-        if not geom:
-            continue
+        center = slope.get("center", {})
 
-        latitudes = [point["lat"] for point in geom]
-        longitudes = [point["lon"] for point in geom]
+        if geom:
+            latitudes = [point["lat"] for point in geom]
+            longitudes = [point["lon"] for point in geom]
+            latitude = sum(latitudes) / len(latitudes)
+            longitude = sum(longitudes) / len(longitudes)
+        elif center:
+            latitude = center.get("lat")
+            longitude = center.get("lon")
+        else:
+            continue
 
         slope_name = slope.get("tags", {}).get("name", "Unbekanntes Skigebiet")
         stmt = insert(Slope).values(
             osm_id=slope["id"],
             name=slope_name,
             difficulty=slope.get("tags", {}).get("piste:difficulty", "unknown"),
-            latitude=sum(latitudes) / len(latitudes),
-            longitude=sum(longitudes) / len(longitudes),
+            latitude=latitude,
+            longitude=longitude,
         )
         stmt = stmt.on_conflict_do_nothing(index_elements=["osm_id"])
         result = db.execute(stmt)
