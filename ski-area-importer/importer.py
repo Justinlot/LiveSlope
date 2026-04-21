@@ -4,6 +4,7 @@ from model import Slope
 import datetime
 from sqlalchemy.dialects.postgresql import insert
 from database import get_db
+from sqlalchemy import text
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
@@ -37,13 +38,13 @@ def generate_tiles(south, west, north, east, step=2.0):
 
 def fetch_tile(s, w, n, e):
     print(f"Fetching tile: S={s}, W={w}, N={n}, E={e}")
-    query = f"""
-    [out:json][timeout:25];
-    (
-      way["piste:type"="downhill"]({s},{w},{n},{e});
-      way["aerialway"]({s},{w},{n},{e});
-    );
-    out geom;
+    query = f"""[out:json][timeout:25];
+        (
+        relation["piste:type"="skiarea"]({s},{w},{n},{e});
+        way["landuse"="winter_sports"]({s},{w},{n},{e});
+        relation["landuse"="winter_sports"]({s},{w},{n},{e});
+        );
+        out geom;
     """
 
     res = requests.post(OVERPASS_URL, data=query)
@@ -91,6 +92,38 @@ def update_slopes():
     slopes = get_ski_areas()
     print(f"Fetched {len(slopes)} unique slopes")
     db = next(get_db())
+
+    db.query(text("""
+    CREATE TABLE IF NOT EXISTS "user" (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) NOT NULL UNIQUE,
+        password_hash VARCHAR(255) NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS "slope" (
+        id SERIAL PRIMARY KEY,
+        osm_id BIGINT UNIQUE,
+        name VARCHAR(255) NOT NULL,
+        difficulty VARCHAR(50),
+        latitude DOUBLE PRECISION,
+        longitude DOUBLE PRECISION
+    );
+
+    ALTER TABLE "slope"
+    ADD COLUMN IF NOT EXISTS osm_id BIGINT;
+
+    CREATE UNIQUE INDEX IF NOT EXISTS slope_osm_id_unique_idx ON "slope" (osm_id);
+
+    CREATE TABLE IF NOT EXISTS "favorite" (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        slope_id INTEGER NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE,
+        FOREIGN KEY (slope_id) REFERENCES "slope"(id) ON DELETE CASCADE
+    );
+    """))
+
+    db.query(Slope).delete()  # Clear existing slopes - we will reinsert them all
     for slope in slopes:
         if slope["type"] != "way":
             continue
