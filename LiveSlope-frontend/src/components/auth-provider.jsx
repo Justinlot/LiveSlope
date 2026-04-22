@@ -11,7 +11,7 @@ export default function AuthProvider({ children }) {
 
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('justin');
+    const [username, setUsername] = useState(null);
 
     useEffect(() => {
         // On mount, check if user is already logged in
