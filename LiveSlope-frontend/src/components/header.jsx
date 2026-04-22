@@ -118,7 +118,7 @@ export default function Header() {
 								<SkiAreaCard skiArea={feature} index={index} key={index} />
 							))}
 						</ul>
-					: (<p>Kein Skigebiet in der Nähe gefunden.</p>)}
+					: (<p>Keine Favoriten vorhanden.</p>)}
 					<button className='side-panel-close' onClick={() => setFavoritePanelOpen(false)}>Schließen</button>
 				</div>, document.body
       )}

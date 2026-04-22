@@ -18,7 +18,7 @@ import Popup from './popup';
 export default function Footer() {
 	const { register, handleSubmit, formState: { errors } } = useForm({resolver: zodResolver(changePasswordScheme)});
 
-	const { username, logout, changePassword } = useContext(AuthContext);
+	const { username, logout, changePassword, deleteAccount } = useContext(AuthContext);
 
 	const [popupOpen, setPopupOpen] = useState(false);
 
@@ -84,6 +84,7 @@ export default function Footer() {
 				<h3>Profil</h3>
 				<p>Benutzername: {username}</p>
 				<button onClick={() => setPopupOpen(true)}>Passwort ändern</button>
+          		<button className='red-button' onClick={async () => await confirm("Möchten Sie Ihren Account wirklich löschen?") && deleteAccount()}>Account löschen</button>
 			</div>, document.body
 			)}
 
@@ -95,7 +96,7 @@ export default function Footer() {
 							<SkiAreaCard skiArea={feature} index={index} key={index} />
 						))}
 					</ul>
-				: (<p>Kein Skigebiet in der Nähe gefunden.</p>)}
+				: (<p>Keine Favoriten vorhanden.</p>)}
 				<button className='side-panel-close' onClick={() => setFavoritePanelOpen(false)}>Schließen</button>
 			</div>, document.body
 			)}
