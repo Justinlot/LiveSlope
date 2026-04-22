@@ -1,10 +1,10 @@
 # LiveSlope
 
-LiveSlope is a full-stack ski area web app with three main parts:
+LiveSlope is a full-stack ski area app with three main parts:
 
-- a FastAPI backend with authentication and favorites
-- a React + Vite frontend with interactive map UI
-- a Python importer that fetches ski slope data from OpenStreetMap (Overpass)
+- FastAPI backend with session auth and favorites
+- React + Vite frontend with interactive map UI
+- Python importer that fetches ski slope data from OpenStreetMap (Overpass)
 
 Visit at https://liveslope.onrender.com
 
@@ -31,9 +31,9 @@ Visit at https://liveslope.onrender.com
 
 - Docker (for containerized setup)
 - or local tooling:
-	- Python 3.12+
-	- Node.js 20+
-	- PostgreSQL
+  - Python 3.12+
+  - Node.js 20+
+  - PostgreSQL
 
 ## Database Setup
 
@@ -47,13 +47,22 @@ Required tables:
 
 ## Environment Variables
 
-Backend and importer use:
+Backend and importer:
 
 - `DATABASE_URL` (PostgreSQL connection string)
 
-Backend also uses:
+Backend also needs:
 
 - `FRONTEND_URL` (CORS allowed origin, e.g. `http://localhost:5173`)
+
+Frontend Docker container (nginx template) expects:
+
+- `BACKEND_URL` (full backend base URL, e.g. `http://host.docker.internal:8000`)
+- `BACKEND_HOST` (host header value, e.g. `host.docker.internal`)
+
+Example database URL:
+
+`postgresql+psycopg2://USER:PASSWORD@HOST:5432/DBNAME`
 
 ## Run Locally (without Docker)
 
@@ -71,6 +80,12 @@ Backend is available at `http://localhost:8000`.
 
 ### 2. Frontend
 
+The frontend currently uses a fixed API base path (`/api/`).
+For local development, either:
+
+- run frontend behind nginx/Docker with `/api/` proxy configured, or
+- temporarily point `src/functions/api-base-url.js` to your backend URL
+
 ```bash
 cd LiveSlope-frontend
 npm install
@@ -81,7 +96,7 @@ Frontend is available at `http://localhost:5173`.
 
 ### 3. Importer (optional)
 
-The importer fetches ski data and then sleeps until 03:00 before the next run.
+The importer fetches ski data, writes new slopes, then sleeps until 03:00 before the next run.
 
 ```bash
 cd ski-area-importer
@@ -108,7 +123,10 @@ docker run --rm -p 8000:8000 \
 ```bash
 cd LiveSlope-frontend
 docker build -t liveslope-frontend .
-docker run --rm -p 8080:80 liveslope-frontend
+docker run --rm -p 8080:80 \
+	-e BACKEND_URL="http://host.docker.internal:8000" \
+	-e BACKEND_HOST="host.docker.internal" \
+	liveslope-frontend
 ```
 
 ### Importer
@@ -157,5 +175,5 @@ See [test.rest](test.rest) for ready-to-run local API requests.
 ## Notes
 
 - Session-based authentication is enabled via server-side sessions.
-- Current frontend API base is configured as `/api/` in [LiveSlope-frontend/src/functions/api-base-url.js](LiveSlope-frontend/src/functions/api-base-url.js).
+- Frontend API base is currently fixed to `/api/` in [LiveSlope-frontend/src/functions/api-base-url.js](LiveSlope-frontend/src/functions/api-base-url.js).
 - Importer currently targets a fixed region (Alps range window) and deduplicates results by OSM object id.
