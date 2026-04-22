@@ -6,6 +6,10 @@ from sqlalchemy.dialects.postgresql import insert
 from database import get_db
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+OVERPASS_HEADERS = {
+    "User-Agent": "LiveSlope ski-area-importer/1.0 (+local development)",
+    "Accept": "application/json",
+}
 
 def sleep_until(hour=3):
     now = datetime.datetime.now()
@@ -40,16 +44,22 @@ def fetch_tile(s, w, n, e):
     query = f"""
     [out:json][timeout:25];
     (
-      way["piste:type"="downhill"]({s},{w},{n},{e});
-      way["aerialway"]({s},{w},{n},{e});
+    way["piste:type"="downhill"]({s},{w},{n},{e});
+    way["aerialway"]({s},{w},{n},{e});
     );
     out geom;
     """
 
-    res = requests.post(OVERPASS_URL, data=query)
+    res = requests.post(
+        OVERPASS_URL,
+        data={"data": query},
+        headers=OVERPASS_HEADERS,
+        timeout=60,
+    )
 
     if res.status_code != 200:
         print("HTTP Error:", res.status_code)
+        print(res.text[:300])
         return None
 
     if not res.text.strip():
@@ -96,19 +106,26 @@ def update_slopes():
             continue
 
         geom = slope.get("geometry", [])
-        if not geom:
-            continue
+        center = slope.get("center", {})
 
-        latitudes = [point["lat"] for point in geom]
-        longitudes = [point["lon"] for point in geom]
+        if geom:
+            latitudes = [point["lat"] for point in geom]
+            longitudes = [point["lon"] for point in geom]
+            latitude = sum(latitudes) / len(latitudes)
+            longitude = sum(longitudes) / len(longitudes)
+        elif center:
+            latitude = center.get("lat")
+            longitude = center.get("lon")
+        else:
+            continue
 
         slope_name = slope.get("tags", {}).get("name", "Unbekanntes Skigebiet")
         stmt = insert(Slope).values(
             osm_id=slope["id"],
             name=slope_name,
             difficulty=slope.get("tags", {}).get("piste:difficulty", "unknown"),
-            latitude=sum(latitudes) / len(latitudes),
-            longitude=sum(longitudes) / len(longitudes),
+            latitude=latitude,
+            longitude=longitude,
         )
         stmt = stmt.on_conflict_do_nothing(index_elements=["osm_id"])
         result = db.execute(stmt)
