@@ -6,7 +6,7 @@ LiveSlope is a full-stack ski area app with three main parts:
 - React + Vite frontend with interactive map UI
 - Python importer that fetches ski slope data from OpenStreetMap (Overpass)
 
-Visit at https://liveslope.onrender.com
+Visit at https://liveslope.onrender.com (database currently offline)
 
 ## Repository Structure
 
